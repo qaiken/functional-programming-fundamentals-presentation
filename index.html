@@ -46,12 +46,23 @@
 <section>
 
   <section>
+    <h3>Agenda</h3>
+    <h4 class="fragment">OOP VS FP</h4>
+    <h4 class="fragment">Algebraic Side Tangent</h4>
+    <h4 class="fragment">Benefits of FP</h4>
+    <h4 class="fragment">Declarative VS Imperative Code</h4>
+    <h4 class="fragment">Point-Free Programming</h4>
+    <h4 class="fragment">Functional Composition</h4>
+    <h4 class="fragment">Functors and Monads (you're already using them)</h4>
+  </section>
+
+  <section>
   <h4>OOP VS FP</h4>
   	<p class="fragment">NOT mutually exclusive.</p>
   <p class="fragment">NOT about objects vs functions.</p>
   <p class="fragment">
   The principles of software design still apply,
-  regardless of your programming style, like Single Responsibility Principle.
+  regardless of your programming style, like the Single Responsibility Principle.
   </p>
   </section>
 
@@ -73,11 +84,11 @@
   <section>
     <h3>OOP</h3>
     <p class="fragment">
-      OO imposes discipline about function pointers. (where functions are defined)
-      Functions are object methods that can be inherited (polymorphism)
+      OO imposes discipline about function pointers (where functions are defined).
+      Functions are object methods that can be inherited (polymorphism).
     </p>
     <p class="fragment">
-      Data and behavior in a single location (properties and methods)
+      Data and behavior in a single location (classes with properties and methods).
     </p>
 
     <small>http://blog.cleancoder.com/uncle-bob/2014/11/24/FPvsOO.html</small>
@@ -86,7 +97,7 @@
   <section>
     <h3>FP</h3>
     <p class="fragment">
-      FP imposes discipline upon assignment. (do not mutate state)
+      FP imposes discipline upon assignment (do not mutate state).
     </p>
     <p class="fragment">
       Functional are "first class". We can treat functions like any other data type.
@@ -160,7 +171,7 @@ var result = add(
   </section>
 
   <section>
-    <h4>Side Tangent</h4>
+    <h4>Algebraic Side Tangent</h4>
 <pre class="fragment">associative property - grouping of addends doesn't matter
 <code>add(add(x, y), z) === add(x, add(y, z));</code>
 </pre>
@@ -228,7 +239,7 @@ var result = multiply(
 
 <section>
   <section>
-    <h3>Benefits of FP</h3>
+    <h4>Benefits of FP</h4>
     <p class="fragment">
       Deeply rooted in tried and true mathematical concepts
     </p>
@@ -242,7 +253,7 @@ var result = multiply(
   </section>
 
   <section>
-    <h3>Benefits of FP</h3>
+    <h4>Benefits of FP</h4>
     <p>
       Deeply rooted in tried and true mathematical concepts
     </p>
@@ -274,9 +285,9 @@ squareNumber(4); // returns cache for input 4 (16)
   </section>
 
   <section>
-    <h3>Benefits of FP</h3>
+    <h4>Benefits of FP</h4>
     <p>
-      Deeply rooted in tried and true mathematical concepts
+      Deeply rooted in tried and true mathematical concepts.
     </p>
     <p>
       Enforces immutability which allows us to see our application's history.
@@ -298,92 +309,191 @@ squareNumber(4); // returns cache for input 4 (16)
   </section>
 </section>
 
-  <section>
-
-          <section>
-            <h2>Where does Point Free Programming Really Shine?</h2>
-          </section>
+<section>
 
   <section>
-            <h2>Function Composition</h2>
-            <ul>
-              <li class="fragment">Build new functions from other functions</li>
-              <li class="fragment">Help build generic programs w/o data arguments</li>
-            </ul>
-  </section>
-
-          <section>
-            <p>( f . g )( x ) &nbsp; = &nbsp; f ( g ( x ) )</p>
-            <p>_.compose( f , g ) ( x ) &nbsp; === &nbsp; f ( g ( x ) )</p>
-          </section>
-
-  <section>
-  <p>_.compose(reverse,toUpper)</p>
-            <p class="fragment">var reversedUpperCase &nbsp; = &nbsp; _.compose(reverse,toUpper);</p>
-            <p class="fragment">reversedUpperCase('hello'); &nbsp; === &nbsp; OLLEH</p>
-  </section>
-
+    <h4>Declarative Vs Imperative</h4>
+    <p class="fragment">Declarative: "Give me emails from a collection."</p>
+    <p class="fragment">Imperative: "Loop thru collection, check each item, if has email, add it to a results var"</p>
   </section>
 
   <section>
+    <h4>Imperative</h4>
+<pre class="fragment">
+<code>function double (arr) {
+  let results = []
+  for (let i = 0; i < arr.length; i++){
+    results.push(arr[i] * 2)
+  }
+  return results
+}
+</code>
+</pre>
 
-          <section>
-  					<h2>What's the problem with UnderScore?</h2>
-          </section>
+  <small>https://tylermcginnis.com/imperative-vs-declarative-programming/</small>
+  </section>
 
-  				<section>
-  					<h2>The Data comes first.</h2>
-  					<p>_.map(list,fn)</p>
-  					<p>_.reduce(list,fn)</p>
-            <p>_.pluck(list,prop)</p>
-  				</section>
+  <section>
+    <h4>Declarative</h4>
+<pre class="fragment">
+<code>function double (arr) {
+  return arr.map((item) => item * 2)
+}
+</code>
+</pre>
 
-          <section>
-            <h2>Function Composition with UnderScore</h2>
-<pre><code>var lastindexOfTwo = function(arrays) {
-  return _.map(arrays,function(array) {
-    return _.lastIndexOf(array,2);
+  <small>https://tylermcginnis.com/imperative-vs-declarative-programming/</small>
+  </section>
+
+  <section>
+    <h4>Declarative Benefits</h4>
+    <p class="fragment">
+      Reads better, easier to see what is happening.
+    </p>
+    <p class="fragment">
+      Less typing, less chance for mistakes/bugs.
+    </p>
+    <p class="fragment">
+      Remove needless variables / state (results var) Which leads to...
+    </p>
+    <p class="fragment">
+      Point Free Programming!
+    </p>
+  </section>
+
+  <section>
+    <h4>Point Free Programming</h4>
+<pre class="fragment">
+<code>var getServerStuff = function(callback) {
+  return ajaxCall(function(json) {
+    return callback(json);
   });
 };
+</code>
+</pre>
 
-lastindexOfTwo([[1,2,3,2],[4,5,6,2,5]]);
-// [3,3]</code></pre>
-          </section>
+<pre class="fragment">
+<code>var getServerStuff = function(callback) {
+  return ajaxCall(callback);
+};
+</code>
+</pre>
 
-          <section>
-            <p>_.compose can't save you because collection functions like _.each, _.map, _.reduce all take the collection first</p>
-          </section>
+<pre class="fragment">
+<code>var getServerStuff = ajaxCall
+</code>
+</pre>
 
-        </section>
+  <small>https://drboolean.gitbooks.io/mostly-adequate-guide</small>
+  </section>
 
-        <section>
+  <section>
+    <h4>Point Free Programming</h4>
+<pre class="fragment">
+<code>httpGet('/post/2', function(json) {
+  return renderPost(json);
+});
+</code>
+</pre>
 
-          <section>
-            <h1>Enter Ramda</h1>
-            <p class="fragment">A practical functional library that makes it easy to create functional pipelines (functions that are partially applied)</p>
-          </section>
+<pre class="fragment">
+<code>httpGet('/post/2', renderPost);
+</code>
+</pre>
 
-          <section>
-<pre><code>// UnderScore:
-var lastindexOfTwo = function(arrays) {
-  return _.map(arrays,function(array) {
-    return _.lastIndexOf(array,2);
-  });
-};</code></pre>
-<pre class="fragment"><code>// Ramda:
-var lastindexOfTwo = R.map(R.lastIndexOf(2));
-</code></pre>
-<pre><code>lastindexOfTwo([[1,2,3,2],[4,5,6,2,5]]);
-// [3,3]
-</code></pre>
-          </section>
+<pre class="fragment">
+<code>httpGet('/post/2', function(json, err) {
+  return renderPost(json, err);
+});
+</code>
+</pre>
 
-          <section data-background="http://i.giphy.com/90F8aUepslB84.gif">
-            <h1>The End</h1>
-          </section>
+  <small>https://drboolean.gitbooks.io/mostly-adequate-guide</small>
 
-        </section>
+  </section>
 
+  <section>
+    <h4>Point Free Programming</h4>
+<pre class="fragment">
+<code>var snakeCase = function(word) {
+  return word.toLowerCase().replace(/\s+/ig, '_');
+};
+</code>
+</pre>
+
+<p class="fragment">Do we really care about the variable "word"?</p>
+
+<pre class="fragment">
+<code>var snakeCase = pipe(
+  toLowerCase,
+  replace(/\s+/ig, '_')
+);
+</code>
+</pre>
+
+  <small>https://drboolean.gitbooks.io/mostly-adequate-guide</small>
+
+  </section>
+
+  <section>
+    <h4>Benefits of Point Free Programming</h4>
+
+    <p class="fragment">
+      Reduces "layers of indirection that provide no added value and only increase the amount of redundant code to maintain and search through."
+    </p>
+
+    <p class="fragment">
+      Keep us concise and generic. "Pointfree is a good litmus test for functional code as it lets us know we've got small functions that take input to output."
+      Which leads to...
+    </p>
+
+    <p class="fragment">
+      Functional Composition!
+    </p>
+
+    <small>(Quotes by Dr Boolean) https://drboolean.gitbooks.io/mostly-adequate-guide</small>
+  </section>
+
+  <section>
+    <h4>Functional Composition</h4>
+
+<pre class="fragment">
+<code>function userNames (res) {
+  var users = res.data.users || []
+  var userNames = []
+  for (var i = 0; i < users.length; i++) {
+      var userName = users[i].name
+      userNames.push(userName)
+  }
+  return userNames
+}
+</code>
+</pre>
+
+<pre class="fragment">
+<code>const userNames = pipe(
+  path([‘data’,’users’]),
+  defaultTo([]),
+  pluck(’name’)
+)(res)
+</code>
+</pre>
+  </section>
+
+  <section>
+    <h4>Benefits of Functional Composition</h4>
+    <p class="fragment">linearity</p>
+    <p class="fragment">less assignment, variables and state</p>
+    <p class="fragment">easily extentable</p>
+    <p class="fragment">Build new functions from other functions</p>
+    <p class="fragment">Help build generic programs w/o data arguments</p>
+  </section>
+
+</section>
+
+<section data-background="http://i.giphy.com/90F8aUepslB84.gif">
+  <h1>The End</h1>
+</section>
 
   </div>
 
