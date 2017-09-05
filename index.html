@@ -39,7 +39,7 @@
 
 <section>
   <h3>Functional Programming Fundamentals</h3>
-  <p>Quinton Aiken, Laurel & Wolf, @qaiken</p>
+  <p>Quinton Aiken, Laurel & Wolf, @quintonaiken</p>
 </section>
 
 <!-- OOP VS FP  -->
@@ -85,10 +85,10 @@
     <h3>OOP</h3>
     <p class="fragment">
       OO imposes discipline about function pointers (where functions are defined).
-      Functions are object methods that can be inherited (polymorphism).
+      In OOP, functions are object methods that can be inherited (polymorphism).
     </p>
     <p class="fragment">
-      Data and behavior in a single location (classes with properties and methods).
+      Data and behavior in a single location - classes with properties (data) and methods (functions).
     </p>
 
     <small>http://blog.cleancoder.com/uncle-bob/2014/11/24/FPvsOO.html</small>
@@ -100,7 +100,7 @@
       FP imposes discipline upon assignment (do not mutate state).
     </p>
     <p class="fragment">
-      Functional are "first class". We can treat functions like any other data type.
+      Functions are "first class". We can treat functions like any other data type.
       They can be stored in arrays, passed around as function parameters,
       assigned to variables, etc.
     </p>
@@ -183,7 +183,7 @@ var result = add(
 </pre>
 <pre class="fragment">distributive - you can multiply a sum by multiplying each
 addend separately and then add the products.
-<code>multiply(x, add(y,z)) === add(multiply(x, y), multiply(x, z));</code>
+<code>add(multiply(x, y), multiply(x, z)) === multiply(x, add(y,z));</code>
 </pre>
   </section>
 
@@ -313,8 +313,8 @@ squareNumber(4); // returns cache for input 4 (16)
 
   <section>
     <h4>Declarative Vs Imperative</h4>
-    <p class="fragment">Declarative: "Give me emails from a collection."</p>
     <p class="fragment">Imperative: "Loop thru collection, check each item, if has email, add it to a results var"</p>
+    <p class="fragment">Declarative: "Give me emails from a collection."</p>
   </section>
 
   <section>
@@ -351,7 +351,7 @@ squareNumber(4); // returns cache for input 4 (16)
       Reads better, easier to see what is happening.
     </p>
     <p class="fragment">
-      Less typing, less chance for mistakes/bugs.
+      Less typing, less chance for mistakes/typos/bugs.
     </p>
     <p class="fragment">
       Remove needless variables / state (results var) Which leads to...
@@ -458,7 +458,7 @@ squareNumber(4); // returns cache for input 4 (16)
     <h4>Functional Composition</h4>
 
 <pre class="fragment">
-<code>function userNames (res) {
+<code>function getUserNames (res) {
   var users = res.data.users || []
   var userNames = []
   for (var i = 0; i < users.length; i++) {
@@ -472,9 +472,9 @@ squareNumber(4); // returns cache for input 4 (16)
 
 <pre class="fragment">
 <code>const userNames = pipe(
-  path([‘data’,’users’]),
+  path(['data','users']),
   defaultTo([]),
-  pluck(’name’)
+  pluck('name')
 )(res)
 </code>
 </pre>
@@ -526,11 +526,14 @@ squareNumber(4); // returns cache for input 4 (16)
     <p class="fragment">What if map returned a functor?</p>
     <p class="fragment">Intead of LazyBox(5) we might get LazyBox(LazyBox(5))</p>
     <p class="fragment">hmm...</p>
+    <p class="fragment">When would we do this though?</p>
   </section>
 
   <section>
     <p>Uncaught TypeError: Cannot read property 'x' of undefined</p>
+    <img class="fragment" width="650" src="monad-1.5.png" />
     <p class="fragment">Monads to the rescue!</p>
+    <small>https://egghead.io/courses/professor-frisby-introduces-composable-functional-javascript</small>
   </section>
 
   <section>
@@ -542,7 +545,7 @@ squareNumber(4); // returns cache for input 4 (16)
   <section>
     <h4>Monads</h4>
     <p class="fragment">
-      Must have a bind/flatMap/chain function which is able to pull the value out from the the monad (x)
+      Must have a bind/flatMap/chain function which is able to pull the value (x) out from the the monad
       and put that value into another function (f) as an argument.
       (f should return a monad of the same type).
     </p>
@@ -571,7 +574,7 @@ squareNumber(4); // returns cache for input 4 (16)
 
   <section>
     <h4>Monads</h4>
-    <p class="fragment">where have we seen this?</p>
+    <p class="fragment">where have we seen this before?</p>
     <p class="fragment">Promises!</p>
 <pre class="fragment">
 <code>Promise.resolve(x)
