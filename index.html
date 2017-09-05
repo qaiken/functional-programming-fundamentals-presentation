@@ -491,6 +491,114 @@ squareNumber(4); // returns cache for input 4 (16)
 
 </section>
 
+<section>
+  <section>
+    <h4>Functors / Monads</h4>
+    <p class="fragment">Functor - thing with a map method (arrays too!)</p>
+    <p class="fragment">Monad - thing with a flatmap/chain/bind method</p>
+  </section>
+
+  <section>
+    <h4>Functors</h4>
+    <img width="650" src="functor.png" />
+    <small>https://egghead.io/courses/professor-frisby-introduces-composable-functional-javascript</small>
+  </section>
+
+  <section>
+    <h4>Functors</h4>
+    <p class="fragment">Map - less about iteration over something and more to do with composition in a context.</p>
+    <p class="fragment">.map.map.map is the composition. the thing that is being mapped is the context (LazyBox(' 64 '))</p>
+    <p class="fragment">Actual value is "wrapped" in our context.</p>
+    <p class="fragment">LazyBox - no impure side-effects until the very end.<p>
+    <p class="fragment">if LazyBox().map.map.map was a library, the maintainers could keep extending it and the consumer's application would remain pure until the consumer calls .fold!</p>
+    <small>https://egghead.io/courses/professor-frisby-introduces-composable-functional-javascript</small>
+  </section>
+
+  <section>
+    <h4>Functors</h4>
+    <img width="650" src="functor.png" />
+    <small>https://egghead.io/courses/professor-frisby-introduces-composable-functional-javascript</small>
+  </section>
+
+  <section>
+    <h4>Functors</h4>
+    <p>In our LazyBox mapping, we always returned the actual value of interest.</p>
+    <p class="fragment">What if map returned a functor?</p>
+    <p class="fragment">Intead of LazyBox(5) we might get LazyBox(LazyBox(5))</p>
+    <p class="fragment">hmm...</p>
+  </section>
+
+  <section>
+    <p>Uncaught TypeError: Cannot read property 'x' of undefined</p>
+    <p class="fragment">Monads to the rescue!</p>
+  </section>
+
+  <section>
+    <h4>Monads</h4>
+    <img width="380" src="monad.png" />
+    <small>https://egghead.io/courses/professor-frisby-introduces-composable-functional-javascript</small>
+  </section>
+
+  <section>
+    <h4>Monads</h4>
+    <p class="fragment">
+      Must have a bind/flatMap/chain function which is able to pull the value out from the the monad (x)
+      and put that value into another function (f) as an argument.
+      (f should return a monad of the same type).
+    </p>
+    <small>https://hackernoon.com/functional-computational-thinking-what-is-a-monad-2adea91154e</small>
+  </section>
+
+  <section>
+    <h4>Monads</h4>
+    <img width="600" src="monad-2.png" />
+    <small>https://egghead.io/courses/professor-frisby-introduces-composable-functional-javascript</small>
+  </section>
+
+  <section>
+    <h4>Monads</h4>
+    <img src="monad-3.png" />
+    <p class="fragment">Imperative</p>
+    <small>https://egghead.io/courses/professor-frisby-introduces-composable-functional-javascript</small>
+  </section>
+
+  <section>
+    <h4>Monads</h4>
+    <img src="monad-4.png" />
+    <p class="fragment">Declarative</p>
+    <small>https://egghead.io/courses/professor-frisby-introduces-composable-functional-javascript</small>
+  </section>
+
+  <section>
+    <h4>Monads</h4>
+    <p class="fragment">where have we seen this?</p>
+    <p class="fragment">Promises!</p>
+<pre class="fragment">
+<code>Promise.resolve(x)
+// Promise(x)
+.then(x => someAsyncFunc(x))
+// Promise(Promise(y)) then === flatMap!
+.then(y => console.log(y))
+</code>
+</pre>
+    <small>https://egghead.io/courses/professor-frisby-introduces-composable-functional-javascript</small>
+  </section>
+
+  <section>
+    <h4>Monads</h4>
+    <p class="fragment">
+      Allow us to use function composition and encapsulation to solve many programming problems like null checking and async flow.
+    </p>
+    <p class="fragment">
+      Further Reading:
+      <ul>
+        <li class="fragment">https://drboolean.gitbooks.io/mostly-adequate-guide/</li>
+        <li class="fragment">https://github.com/fantasyland/fantasy-land</li>
+      </ul>
+    </p>
+  </section>
+</section>
+
 <section data-background="http://i.giphy.com/90F8aUepslB84.gif">
   <h1>The End</h1>
 </section>
