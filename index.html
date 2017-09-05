@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>Point Free Programming</title>
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/black.css" id="theme">
+
+		<!-- Code syntax highlighting -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<div class="slides">
+        
+				<section>
+					<h1>Point Free Programming</h1>
+				</section>
+
+        <section>
+
+				  <section>
+            <h4>Anonymous Function Callback</h4>
+<pre><code>[1, 2, 3].map(function(x) {
+  return 2 * x;
+});</code></pre>
+          </section>
+
+        <section>
+        <h4>Using a function declaration</h4>
+<pre><code>function double(x) {
+  return 2 * x;
+}
+
+[1, 2, 3].map(function(x) {
+  return double(x);
+});</code></pre>
+        </section>
+
+        <section>
+        <h4>Point Free!</h4>
+<pre><code>function double(x) {
+  return 2 * x;
+}
+
+[1, 2, 3].map(double);</code></pre>
+        </section>
+
+        <section>
+          <ul>
+            <li>We just eliminated 1 function and 1 variable.</li>
+            <li class="fragment">This leads to smaller and simpler code.</li>
+          </ul>
+          <p class="fragment">The elimination of unnecessary variables that are just passed from one function to another is called point-free programming.</p>
+        </section>
+
+</section>
+
+				<section>
+
+          <section>
+            <h2>Where does Point Free Programming Really Shine?</h2>
+          </section>
+
+					<section>
+            <h2>Function Composition</h2>
+            <ul>
+              <li class="fragment">Build new functions from other functions</li>
+              <li class="fragment">Help build generic programs w/o data arguments</li>
+            </ul>
+					</section>
+
+          <section>
+            <p>( f . g )( x ) &nbsp; = &nbsp; f ( g ( x ) )</p>
+            <p>_.compose( f , g ) ( x ) &nbsp; === &nbsp; f ( g ( x ) )</p>
+          </section>
+
+					<section>
+						<p>_.compose(reverse,toUpper)</p>
+            <p class="fragment">var reversedUpperCase &nbsp; = &nbsp; _.compose(reverse,toUpper);</p>
+            <p class="fragment">reversedUpperCase('hello'); &nbsp; === &nbsp; OLLEH</p>
+					</section>
+
+				</section>
+
+				<section>
+
+          <section>
+  					<h2>What's the problem with UnderScore?</h2>
+          </section>
+
+  				<section>
+  					<h2>The Data comes first.</h2>
+  					<p>_.map(list,fn)</p>
+  					<p>_.reduce(list,fn)</p>
+            <p>_.pluck(list,prop)</p>
+  				</section>
+
+          <section>
+            <h2>Function Composition with UnderScore</h2>
+<pre><code>var lastindexOfTwo = function(arrays) {
+  return _.map(arrays,function(array) {
+    return _.lastIndexOf(array,2);
+  });
+};
+
+lastindexOfTwo([[1,2,3,2],[4,5,6,2,5]]);
+// [3,3]</code></pre>
+          </section>
+
+          <section>
+            <p>_.compose can't save you because collection functions like _.each, _.map, _.reduce all take the collection first</p>
+          </section>
+
+        </section>
+
+        <section>
+
+          <section>
+            <h1>Enter Ramda</h1>
+            <p class="fragment">A practical functional library that makes it easy to create functional pipelines (functions that are partially applied)</p>
+          </section>
+
+          <section>
+<pre><code>// UnderScore:
+var lastindexOfTwo = function(arrays) {
+  return _.map(arrays,function(array) {
+    return _.lastIndexOf(array,2);
+  });
+};</code></pre>
+<pre class="fragment"><code>// Ramda:
+var lastindexOfTwo = R.map(R.lastIndexOf(2));
+</code></pre>
+<pre><code>lastindexOfTwo([[1,2,3,2],[4,5,6,2,5]]);
+// [3,3]
+</code></pre>
+          </section>
+
+          <section data-background="http://i.giphy.com/90F8aUepslB84.gif">
+            <h1>The End</h1>
+          </section>
+
+        </section>
+
+
+			</div>
+
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+
+		<script>
+
+			// Full list of configuration options available at:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+				// Optional reveal.js plugins
+				dependencies: [
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true, condition: function() { return !!document.querySelector( 'pre code' ); }, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/zoom-js/zoom.js', async: true },
+					{ src: 'plugin/notes/notes.js', async: true }
+				]
+			});
+
+		</script>
+
+	</body>
+</html>
