@@ -226,7 +226,77 @@ var result = multiply(
 
 </section>
 
+<section>
+  <section>
+    <h3>Benefits of FP</h3>
+    <p class="fragment">
+      Deeply rooted in tried and true mathematical concepts
+    </p>
+    <p class="fragment">
+      Enforces immutability which allows us to see our application's history.
+    </p>
+  </section>
 
+  <section>
+    <img width="960" src="redux-logger.png" />
+  </section>
+
+  <section>
+    <h3>Benefits of FP</h3>
+    <p>
+      Deeply rooted in tried and true mathematical concepts
+    </p>
+    <p>
+      Enforces immutability which allows us to see our application's history.
+    </p>
+    <p class="fragment">
+      Minimal Side Effects - functions called with same input, give you the same output.
+      Which leads to...
+    </p>
+    <p class="fragment">
+      Cacheable Functions / Memoization
+    </p>
+  </section>
+
+  <section>
+<pre>
+<code>var squareNumber = memoize(function(x) {
+  return x * x;
+});
+
+squareNumber(4); // 16
+
+squareNumber(4); // returns cache for input 4 (16)
+</code>
+</pre>
+
+    <small>https://drboolean.gitbooks.io/mostly-adequate-guide</small>
+  </section>
+
+  <section>
+    <h3>Benefits of FP</h3>
+    <p>
+      Deeply rooted in tried and true mathematical concepts
+    </p>
+    <p>
+      Enforces immutability which allows us to see our application's history.
+    </p>
+    <p>
+      Minimal Side Effects - functions called with same input, give you the same output.
+      Which leads to...
+    </p>
+    <p>
+      Cacheable Functions / Memoization
+    </p>
+    <p class="fragment">
+      Predictable and Testable Code - I/O
+      Which leads to...
+    </p>
+    <p class="fragment">
+      More readable and declarative code
+    </p>
+  </section>
+</section>
 
   <section>
 
