@@ -1,113 +1,261 @@
 <!doctype html>
 <html lang="en">
 
-	<head>
-		<meta charset="utf-8">
+  <head>
+  <meta charset="utf-8">
 
-		<title>Point Free Programming</title>
+  <title>Functional Programming Fundamentals</title>
 
-		<meta name="apple-mobile-web-app-capable" content="yes" />
-		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
 
-		<link rel="stylesheet" href="css/reveal.css">
-		<link rel="stylesheet" href="css/theme/black.css" id="theme">
+  <link rel="stylesheet" href="css/reveal.css">
+  <link rel="stylesheet" href="css/theme/black.css" id="theme">
 
-		<!-- Code syntax highlighting -->
-		<link rel="stylesheet" href="lib/css/zenburn.css">
+  <!-- Code syntax highlighting -->
+  <link rel="stylesheet" href="lib/css/zenburn.css">
 
-		<!-- Printing and PDF exports -->
-		<script>
-			var link = document.createElement( 'link' );
-			link.rel = 'stylesheet';
-			link.type = 'text/css';
-			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
-			document.getElementsByTagName( 'head' )[0].appendChild( link );
-		</script>
+  <!-- Printing and PDF exports -->
+  <script>
+  var link = document.createElement( 'link' );
+  link.rel = 'stylesheet';
+  link.type = 'text/css';
+  link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+  document.getElementsByTagName( 'head' )[0].appendChild( link );
+  </script>
 
-		<!--[if lt IE 9]>
-		<script src="lib/js/html5shiv.js"></script>
-		<![endif]-->
-	</head>
+  <!--[if lt IE 9]>
+  <script src="lib/js/html5shiv.js"></script>
+  <![endif]-->
+  </head>
 
-	<body>
+  <body>
 
-		<div class="reveal">
+  <div class="reveal">
 
-			<div class="slides">
-        
-				<section>
-					<h1>Point Free Programming</h1>
-				</section>
+  <div class="slides">
 
-        <section>
+<section>
+  <h3>Functional Programming Fundamentals</h3>
+  <p>Quinton Aiken, Laurel & Wolf, @qaiken</p>
+</section>
 
-				  <section>
-            <h4>Anonymous Function Callback</h4>
-<pre><code>[1, 2, 3].map(function(x) {
-  return 2 * x;
-});</code></pre>
-          </section>
+<!-- OOP VS FP  -->
+<section>
 
-        <section>
-        <h4>Using a function declaration</h4>
-<pre><code>function double(x) {
-  return 2 * x;
-}
+  <section>
+  <h4>OOP VS FP</h4>
+  	<p class="fragment">NOT mutually exclusive.</p>
+  <p class="fragment">NOT about objects vs functions.</p>
+  <p class="fragment">
+  The principles of software design still apply,
+  regardless of your programming style, like Single Responsibility Principle.
+  </p>
+  </section>
 
-[1, 2, 3].map(function(x) {
-  return double(x);
-});</code></pre>
-        </section>
+  <section>
+  <p>
+  Every functional program ever written is composed of a set of functions that operate on data.
+  Every OO program ever written is composed of a set of functions that operate on data. - Robert Cecil Martin
+  </p>
 
-        <section>
-        <h4>Point Free!</h4>
-<pre><code>function double(x) {
-  return 2 * x;
-}
+<pre class="fragment">
+<code>f(o) VS o.f()</code>
+</pre>
 
-[1, 2, 3].map(double);</code></pre>
-        </section>
+  <p class="fragment">
+  This syntax difference alone is not meaningful.
+  </p>
+  </section>
 
-        <section>
-          <ul>
-            <li>We just eliminated 1 function and 1 variable.</li>
-            <li class="fragment">This leads to smaller and simpler code.</li>
-          </ul>
-          <p class="fragment">The elimination of unnecessary variables that are just passed from one function to another is called point-free programming.</p>
-        </section>
+  <section>
+    <h3>OOP</h3>
+    <p class="fragment">
+      OO imposes discipline about function pointers. (where functions are defined)
+      Functions are object methods that can be inherited (polymorphism)
+    </p>
+    <p class="fragment">
+      Data and behavior in a single location (properties and methods)
+    </p>
+
+    <small>http://blog.cleancoder.com/uncle-bob/2014/11/24/FPvsOO.html</small>
+  </section>
+
+  <section>
+    <h3>FP</h3>
+    <p class="fragment">
+      FP imposes discipline upon assignment. (do not mutate state)
+    </p>
+    <p class="fragment">
+      Functional are "first class". We can treat functions like any other data type.
+      They can be stored in arrays, passed around as function parameters,
+      assigned to variables, etc.
+    </p>
+
+    <small>http://blog.cleancoder.com/uncle-bob/2014/11/24/FPvsOO.html</small>
+    <small>https://drboolean.gitbooks.io/mostly-adequate-guide</small>
+  </section>
+
+  <section>
+  <h4>OOP Example</h4>
+<pre class="fragment">
+<code>var Flock = function(n) {
+  this.seagulls = n;
+};
+
+Flock.prototype.conjoin = function(other) {
+  this.seagulls += other.seagulls;
+  return this;
+};
+
+Flock.prototype.breed = function(other) {
+  this.seagulls = this.seagulls * other.seagulls;
+  return this;
+};
+
+var flock_a = new Flock(4);
+var flock_b = new Flock(2);
+var flock_c = new Flock(0);
+
+var result = flock_a // 4
+.conjoin(flock_c) // 4
+.breed(flock_b) // 8
+.conjoin(flock_a.breed(flock_b)) // (16 + (8*2 = 16))
+.seagulls; // 32
+</code>
+</pre>
+
+  <p class="fragment">
+  32!??
+  </p>
+
+  <small>https://drboolean.gitbooks.io/mostly-adequate-guide</small>
+
+  </section>
+
+  <section>
+  <h4>FP Example</h4>
+
+<pre class="fragment">
+<code>var add = function(x, y) { return x + y; };
+var multiply = function(x, y) { return x * y; };
+
+var flock_a = 4;
+var flock_b = 2;
+var flock_c = 0;
+
+var result = add(
+  multiply(
+    flock_b,
+    add(flock_a, flock_c)
+  ),
+  multiply(flock_a, flock_b)
+); // 16
+</code>
+</pre>
+
+  <small>https://drboolean.gitbooks.io/mostly-adequate-guide</small>
+  </section>
+
+  <section>
+    <h4>Side Tangent</h4>
+<pre class="fragment">associative property - grouping of addends doesn't matter
+<code>add(add(x, y), z) === add(x, add(y, z));</code>
+</pre>
+<pre class="fragment">commutative - order of addends doesn't matter
+<code>add(x, y) === add(y, x);</code>
+</pre>
+<pre class="fragment">identity - adding zero doesn't do anything
+<code>add(x, 0) === x;</code>
+</pre>
+<pre class="fragment">distributive - you can multiply a sum by multiplying each
+addend separately and then add the products.
+<code>multiply(x, add(y,z)) === add(multiply(x, y), multiply(x, z));</code>
+</pre>
+  </section>
+
+  <section>
+    <h4>Identity?</h4>
+<pre>
+<code>var flock_a = 4;
+var flock_b = 2;
+var flock_c = 0;
+
+var result = add(
+  multiply(
+    flock_b,
+    add(flock_a, flock_c)
+  ),
+  multiply(flock_a, flock_b)
+); // 16
+</code>
+</pre>
+  </section>
+
+  <section>
+    <h4>Distributive?</h4>
+<pre>
+<code>var flock_a = 4;
+var flock_b = 2;
+var flock_c = 0;
+
+var result = add(
+  multiply(flock_b, flock_a),
+  multiply(flock_a, flock_b)
+); // 16
+</code>
+</pre>
+  </section>
+
+  <section>
+    <h4>Simplified</h4>
+<pre>
+<code>var flock_a = 4;
+var flock_b = 2;
+var flock_c = 0;
+
+var result = multiply(
+  flock_b,
+  add(flock_a, flock_a)
+); // 16
+</code>
+</pre>
+  </section>
 
 </section>
 
-				<section>
+
+
+  <section>
 
           <section>
             <h2>Where does Point Free Programming Really Shine?</h2>
           </section>
 
-					<section>
+  <section>
             <h2>Function Composition</h2>
             <ul>
               <li class="fragment">Build new functions from other functions</li>
               <li class="fragment">Help build generic programs w/o data arguments</li>
             </ul>
-					</section>
+  </section>
 
           <section>
             <p>( f . g )( x ) &nbsp; = &nbsp; f ( g ( x ) )</p>
             <p>_.compose( f , g ) ( x ) &nbsp; === &nbsp; f ( g ( x ) )</p>
           </section>
 
-					<section>
-						<p>_.compose(reverse,toUpper)</p>
+  <section>
+  <p>_.compose(reverse,toUpper)</p>
             <p class="fragment">var reversedUpperCase &nbsp; = &nbsp; _.compose(reverse,toUpper);</p>
             <p class="fragment">reversedUpperCase('hello'); &nbsp; === &nbsp; OLLEH</p>
-					</section>
+  </section>
 
-				</section>
+  </section>
 
-				<section>
+  <section>
 
           <section>
   					<h2>What's the problem with UnderScore?</h2>
@@ -167,37 +315,37 @@ var lastindexOfTwo = R.map(R.lastIndexOf(2));
         </section>
 
 
-			</div>
+  </div>
 
-		</div>
+  </div>
 
-		<script src="lib/js/head.min.js"></script>
-		<script src="js/reveal.js"></script>
+  <script src="lib/js/head.min.js"></script>
+  <script src="js/reveal.js"></script>
 
-		<script>
+  <script>
 
-			// Full list of configuration options available at:
-			// https://github.com/hakimel/reveal.js#configuration
-			Reveal.initialize({
-				controls: true,
-				progress: true,
-				history: true,
-				center: true,
+  // Full list of configuration options available at:
+  // https://github.com/hakimel/reveal.js#configuration
+  Reveal.initialize({
+  controls: true,
+  progress: true,
+  history: true,
+  center: true,
 
-				transition: 'slide', // none/fade/slide/convex/concave/zoom
+  transition: 'slide', // none/fade/slide/convex/concave/zoom
 
-				// Optional reveal.js plugins
-				dependencies: [
-					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
-					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
-					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
-					{ src: 'plugin/highlight/highlight.js', async: true, condition: function() { return !!document.querySelector( 'pre code' ); }, callback: function() { hljs.initHighlightingOnLoad(); } },
-					{ src: 'plugin/zoom-js/zoom.js', async: true },
-					{ src: 'plugin/notes/notes.js', async: true }
-				]
-			});
+  // Optional reveal.js plugins
+  dependencies: [
+  { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+  { src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+  { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+  { src: 'plugin/highlight/highlight.js', async: true, condition: function() { return !!document.querySelector( 'pre code' ); }, callback: function() { hljs.initHighlightingOnLoad(); } },
+  { src: 'plugin/zoom-js/zoom.js', async: true },
+  { src: 'plugin/notes/notes.js', async: true }
+  ]
+  });
 
-		</script>
+  </script>
 
-	</body>
+  </body>
 </html>
