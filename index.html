@@ -84,7 +84,7 @@
   <section>
     <h3>OOP</h3>
     <p class="fragment">
-      OO imposes discipline about function pointers (where functions are defined).
+      OO imposes discipline about where functions are defined.
       In OOP, functions are object methods that can be inherited (polymorphism).
     </p>
     <p class="fragment">
@@ -413,33 +413,10 @@ squareNumber(4); // returns cache for input 4 (16)
   </section>
 
   <section>
-    <h4>Point Free Programming</h4>
-<pre class="fragment">
-<code>var snakeCase = function(word) {
-  return word.toLowerCase().replace(/\s+/ig, '_');
-};
-</code>
-</pre>
-
-<p class="fragment">Do we really care about the variable "word"?</p>
-
-<pre class="fragment">
-<code>var snakeCase = pipe(
-  toLowerCase,
-  replace(/\s+/ig, '_')
-);
-</code>
-</pre>
-
-  <small>https://drboolean.gitbooks.io/mostly-adequate-guide</small>
-
-  </section>
-
-  <section>
     <h4>Benefits of Point Free Programming</h4>
 
     <p class="fragment">
-      Reduces "layers of indirection that provide no added value and only increase the amount of redundant code to maintain and search through."
+      Reduces "the amount of redundant code to maintain and search through."
     </p>
 
     <p class="fragment">
@@ -547,7 +524,7 @@ squareNumber(4); // returns cache for input 4 (16)
     <p class="fragment">
       Must have a bind/flatMap/chain function which is able to pull the value (x) out from the the monad
       and put that value into another function (f) as an argument.
-      (f should return a monad of the same type).
+      (f should return a monad).
     </p>
     <small>https://hackernoon.com/functional-computational-thinking-what-is-a-monad-2adea91154e</small>
   </section>
@@ -599,11 +576,8 @@ squareNumber(4); // returns cache for input 4 (16)
         <li class="fragment">https://github.com/fantasyland/fantasy-land</li>
       </ul>
     </p>
+    <h2 class="fragment">The End</h2>
   </section>
-</section>
-
-<section data-background="http://i.giphy.com/90F8aUepslB84.gif">
-  <h1>The End</h1>
 </section>
 
   </div>
